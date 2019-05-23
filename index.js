@@ -99,10 +99,6 @@ const onChange = (object, onChange, options = {}) => {
 
 			const previous = Reflect.get(target, property, receiver);
 
-			if (isBuiltIn(target) && target[property]) {
-				console.log('XXXXX');
-			}
-
 			const result = Reflect.set(target, property, value);
 
 			if (previous !== value) {
