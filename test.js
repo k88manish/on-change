@@ -59,6 +59,14 @@ test('main', t => {
 	object.bar.a.c[2] = undefined;
 	t.is(object.bar.a.c[2], undefined);
 	t.is(callCount, 8);
+
+	// Support dates
+	object.bar.a.c[2] = new Date(1546300800000);
+	t.deepEqual(object.bar.a.c[2], new Date(1546300800000));
+	t.is(object.bar.a.c[2].valueOf(), 1546300800000);
+	t.is(object.bar.a.c[2].getDate(), 1);
+	t.is(callCount, 9);
+
 });
 
 test('works with an array too', t => {

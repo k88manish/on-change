@@ -1,6 +1,7 @@
 'use strict';
 
 const isPrimitive = value => value === null || (typeof value !== 'object' && typeof value !== 'function');
+const isBuiltIn = value => value !== null && value instanceof Date;
 
 const concatPath = (path, property) => {
 	if (property && property.toString) {
@@ -65,7 +66,7 @@ const onChange = (object, onChange, options = {}) => {
 			}
 
 			const value = Reflect.get(target, property, receiver);
-			if (isPrimitive(value) || property === 'constructor' || options.isShallow === true) {
+			if (isBuiltIn(value) || isPrimitive(value) || property === 'constructor' || options.isShallow === true) {
 				return value;
 			}
 
@@ -97,6 +98,11 @@ const onChange = (object, onChange, options = {}) => {
 			}
 
 			const previous = Reflect.get(target, property, receiver);
+
+			if (isBuiltIn(target) && target[property]) {
+				console.log('XXXXX');
+			}
+
 			const result = Reflect.set(target, property, value);
 
 			if (previous !== value) {
